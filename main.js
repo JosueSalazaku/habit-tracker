@@ -36,6 +36,11 @@ monthsOfYear.forEach((month) => {
   //creat calender for the month
   console.log(`${month} ${currentYear}`);
 
+  // Add thins dynamically here
+  const monthDisplay = document.createElement("h4");
+  monthDisplay.innerHTML = month;
+  calenderContainer.appendChild(monthDisplay);
+
   for (let day = 1; day <= numerOfDays; day++) {
     const currentDay = new Date(currentYear, monthIndex, day);
     const dayOfWeek = daysOfWeek[currentDay.getDay()];
