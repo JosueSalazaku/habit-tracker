@@ -15,40 +15,28 @@ const monthsOfYear = [
   "December",
 ];
 
+const calenderContainer = document.getElementById("calender");
 const daysOfWeekRow = document.createElement("div");
 section.appendChild(daysOfWeekRow);
 
 console.log(daysOfWeek);
 console.log(monthsOfYear);
 
-// const today = new Date();
-// const dayOfWeek = daysOfWeek[today.getDay()];
-// const currentMonth = monthsOfYear[today.getMonth()];
+monthsOfYear.forEach((month) => {
+  //get the current year and monthindex
+  const currentYear = new Date().getFullYear();
+  const monthIndex = monthsOfYear.indexOf(month);
 
-function generateMiniCalendar(year, month) {
-  const dayInMonth = new Date(year, month + 1, 0).getDate();
-  const firstDayOfMonth = new Date(year, month, 1).getDate();
+  //Get the first day of the month
+  const firstDay = new Date(currentYear, monthIndex, 1);
+  //Get the last day of the month
+  const lastDay = new Date(currentYear, monthIndex + 1, 0);
+  //Calculate the number of days in the month
+  const numerOfDays = lastDay.getDate();
+  //creat calender for the month
+  console.log(`${month} ${currentYear}`);
 
-  const calenderContainer = document.getElementById("calender");
-  calenderContainer.innerHTML = "";
-
-  //creather header
-  const header = document.createElement("div");
-  header.textContent = `${new Date(year, month).toLocaleString("default", {
-    month: "long",
-  })} ${year}`;
-  header.classList.add("calendar-header");
-  calenderContainer.appendChild(header);
-
-  //create labels
-}
-
-daysOfWeek.forEach((day) => {
-  const dayLabel = document.createElement("label");
-  const dayInput = document.createElement("input");
-  dayInput.classList.add("form-radio");
-  dayInput.type = "checkbox";
-  dayLabel.textContent = day;
-  daysOfWeekRow.appendChild(dayLabel);
-  daysOfWeekRow.append(dayInput);
+  for (let day = 1; day <= numerOfDays; day++) {
+    console.log(`Week ${Math.ceil((firstDay.getDay() + day) / 7)}, Day ${day}`);
+  }
 });
