@@ -37,6 +37,13 @@ monthsOfYear.forEach((month) => {
   console.log(`${month} ${currentYear}`);
 
   for (let day = 1; day <= numerOfDays; day++) {
-    console.log(`Week ${Math.ceil((firstDay.getDay() + day) / 7)}, Day ${day}`);
+    const currentDay = new Date(currentYear, monthIndex, day);
+    const dayOfWeek = daysOfWeek[currentDay.getDay()];
+
+    console.log(
+      `Week ${Math.ceil(
+        (firstDay.getDay() + day) / 7
+      )}, Day ${day}: ${dayOfWeek}`
+    );
   }
 });
