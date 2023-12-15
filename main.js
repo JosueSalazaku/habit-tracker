@@ -1,5 +1,5 @@
-const section = document.querySelector("#canvas");
-const daysOfWeek = ["Sun", "Mo", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const calendarContainer = document.getElementById("calendar");
+
 const monthsOfYear = [
   "January",
   "February",
@@ -14,41 +14,40 @@ const monthsOfYear = [
   "November",
   "December",
 ];
+const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const calenderContainer = document.getElementById("calender");
-const daysOfWeekRow = document.createElement("div");
-section.appendChild(daysOfWeekRow);
-
-console.log(daysOfWeek);
-console.log(monthsOfYear);
+function calculateWeekNumber(firstDay, currentDay) {
+  return Math.ceil((firstDay.getDay() + currentDay) / 7);
+}
 
 monthsOfYear.forEach((month) => {
-  //get the current year and monthindex
   const currentYear = new Date().getFullYear();
   const monthIndex = monthsOfYear.indexOf(month);
 
-  //Get the first day of the month
-  const firstDay = new Date(currentYear, monthIndex, 1);
-  //Get the last day of the month
-  const lastDay = new Date(currentYear, monthIndex + 1, 0);
-  //Calculate the number of days in the month
-  const numerOfDays = lastDay.getDate();
-  //creat calender for the month
-  console.log(`${month} ${currentYear}`);
+  const firstDayOfMonth = new Date(currentYear, monthIndex, 1);
+  const lastDayOfMonth = new Date(currentYear, monthIndex + 1, 0);
+  const numerOfDays = lastDayOfMonth.getDate();
 
-  // Add thins dynamically here
-  const monthDisplay = document.createElement("h4");
-  monthDisplay.innerHTML = month;
-  calenderContainer.appendChild(monthDisplay);
+  // Create a paragraph for the month
+  const displayMonth = document.createElement("h4");
+  displayMonth.innerHTML = month;
+  calendarContainer.appendChild(displayMonth);
 
+  // Create calendar for the month
   for (let day = 1; day <= numerOfDays; day++) {
-    const currentDay = new Date(currentYear, monthIndex, day);
-    const dayOfWeek = daysOfWeek[currentDay.getDay()];
+    const currentDayDate = new Date(currentYear, monthIndex, day);
+    const dayOfWeek = daysOfWeek[currentDayDate.getDay()];
 
-    console.log(
-      `Week ${Math.ceil(
-        (firstDay.getDay() + day) / 7
-      )}, Day ${day}: ${dayOfWeek}`
-    );
+    // Calculate week for each day
+    const week = calculateWeekNumber(firstDayOfMonth, day);
+
+    // Create a paragraph for each day
+    const displayDay = document.createElement("p");
+    displayDay.innerHTML = `Week ${week}, Day ${day}: ${dayOfWeek}`;
+    calendarContainer.appendChild(displayDay);
   }
+
+  // Add a newline for better readability
+  const newline = document.createElement("br");
+  calendarContainer.appendChild(newline);
 });
