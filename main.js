@@ -36,12 +36,13 @@ monthsOfYear.forEach((month) => {
   const numerOfDays = lastDayOfMonth.getDate();
 
   // Create a paragraph for the month
-  const displayMonth = document.createElement("h4");
+  const displayMonth = document.createElement("h2");
   displayMonth.innerHTML = month;
   calendarContainer.appendChild(displayMonth);
 
   // Create a new week container for each month
   const monthContainer = document.createElement("div");
+  monthContainer.classList.add("week-list");
   calendarContainer.appendChild(monthContainer);
 
   // Declare weekContainer outside the loop
@@ -61,16 +62,17 @@ monthsOfYear.forEach((month) => {
 
       // Display the week number
       const displayWeek = document.createElement("h4");
+      displayWeek.classList.add("weeks");
       displayWeek.innerHTML = `Week ${week}`;
       weekContainer.appendChild(displayWeek);
     }
 
     // Create a paragraph for each day and append it to the week container
     const displayDay = document.createElement("p");
+    displayDay.classList.add("days");
     displayDay.innerHTML = `${dayOfWeek}`;
     weekContainer.appendChild(displayDay);
   }
-
   // Add a newline for better readability
   const newline = document.createElement("br");
   calendarContainer.appendChild(newline);
