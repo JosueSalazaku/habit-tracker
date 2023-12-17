@@ -1,4 +1,6 @@
 const calendarContainer = document.getElementById("calendar");
+const body = document.body;
+const checkBox = document.getElementById("checkbox");
 
 const monthsOfYear = [
   "January",
@@ -15,6 +17,11 @@ const monthsOfYear = [
   "December",
 ];
 const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+if (localStorage.getItem("darkMode") === "enabled") {
+  body.classList.add("dark");
+  checkBox.checked = true;
+}
 
 function calculateWeekNumber(firstDay, currentDay) {
   return Math.ceil((firstDay.getDay() + currentDay) / 7);
@@ -50,4 +57,13 @@ monthsOfYear.forEach((month) => {
   // Add a newline for better readability
   const newline = document.createElement("br");
   calendarContainer.appendChild(newline);
+});
+
+checkBox.addEventListener("change", () => {
+  document.body.classList.toggle("dark");
+  if (body.classList.contains("dark")) {
+    localStorage.setItem("darkMode", "enabled");
+  } else {
+    localStorage.removeItem("darkMode");
+  }
 });
