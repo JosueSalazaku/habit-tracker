@@ -40,18 +40,24 @@ monthsOfYear.forEach((month) => {
   displayMonth.innerHTML = month;
   calendarContainer.appendChild(displayMonth);
 
+  // Create a new week container for each month
+  const weekContainer = document.createElement("div");
+  calendarContainer.appendChild(weekContainer);
+
+  // Display the week number
+  const displayWeek = document.createElement("p");
+  displayWeek.innerHTML = `Week 1`; // assuming all days are in the same week
+  weekContainer.appendChild(displayWeek);
+
   // Create calendar for the month
-  for (let day = 1; day <= numerOfDays; day++) {
-    const currentDayDate = new Date(currentYear, monthIndex, day);
+  for (let day = 0; day < 7; day++) {
+    const currentDayDate = new Date(currentYear, monthIndex, day + 1);
     const dayOfWeek = daysOfWeek[currentDayDate.getDay()];
 
-    // Calculate week for each day
-    const week = calculateWeekNumber(firstDayOfMonth, day);
-
-    // Create a paragraph for each day
+    // Create a paragraph for each day and append it to the week container
     const displayDay = document.createElement("p");
-    displayDay.innerHTML = `Week ${week}, Day ${day}: ${dayOfWeek}`;
-    calendarContainer.appendChild(displayDay);
+    displayDay.innerHTML = `${dayOfWeek}`;
+    weekContainer.appendChild(displayDay);
   }
 
   // Add a newline for better readability
