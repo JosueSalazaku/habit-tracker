@@ -41,18 +41,29 @@ monthsOfYear.forEach((month) => {
   calendarContainer.appendChild(displayMonth);
 
   // Create a new week container for each month
-  const weekContainer = document.createElement("div");
-  calendarContainer.appendChild(weekContainer);
+  const monthContainer = document.createElement("div");
+  calendarContainer.appendChild(monthContainer);
 
-  // Display the week number
-  const displayWeek = document.createElement("p");
-  displayWeek.innerHTML = `Week 1`; // assuming all days are in the same week
-  weekContainer.appendChild(displayWeek);
+  // Declare weekContainer outside the loop
+  let weekContainer;
 
   // Create calendar for the month
-  for (let day = 0; day < 7; day++) {
-    const currentDayDate = new Date(currentYear, monthIndex, day + 1);
+  for (let day = 1; day <= numerOfDays; day++) {
+    const currentDayDate = new Date(currentYear, monthIndex, day);
     const dayOfWeek = daysOfWeek[currentDayDate.getDay()];
+    const week = calculateWeekNumber(firstDayOfMonth, day);
+
+    // Check if a new week is starting
+    if (day === 1 || week !== calculateWeekNumber(firstDayOfMonth, day - 1)) {
+      // Create a new week container
+      weekContainer = document.createElement("div");
+      monthContainer.appendChild(weekContainer);
+
+      // Display the week number
+      const displayWeek = document.createElement("h4");
+      displayWeek.innerHTML = `Week ${week}`;
+      weekContainer.appendChild(displayWeek);
+    }
 
     // Create a paragraph for each day and append it to the week container
     const displayDay = document.createElement("p");
