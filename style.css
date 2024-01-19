@@ -5,6 +5,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
+  color: black;
 }
 
 body.dark {
@@ -107,6 +108,7 @@ input:checked + .slider:before {
   justify-content: space-evenly;
   align-content: center;
   /* align-items: center; */
+  color: #4603a4;
 }
 
 h2 {
@@ -126,10 +128,9 @@ h4 {
   margin-top: 15px;
 }
 
-p {
+p.days {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  margin: 15px;
 }

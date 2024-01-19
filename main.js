@@ -72,6 +72,10 @@ monthsOfYear.forEach((month) => {
     displayDay.classList.add("days");
     displayDay.innerHTML = `${dayOfWeek}`;
     weekContainer.appendChild(displayDay);
+
+    const dayInput = document.createElement("input");
+    dayInput.type = "checkbox";
+    weekContainer.appendChild(dayInput);
   }
   // Add a newline for better readability
   const newline = document.createElement("br");
