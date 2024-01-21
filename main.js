@@ -16,7 +16,7 @@ const monthsOfYear = [
   "November",
   "December",
 ];
-const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 if (localStorage.getItem("darkMode") === "enabled") {
   body.classList.add("dark");
@@ -24,7 +24,10 @@ if (localStorage.getItem("darkMode") === "enabled") {
 }
 
 function calculateWeekNumber(firstDay, currentDay) {
-  return Math.ceil((firstDay.getDay() + currentDay) / 7);
+  const daysSinceFirstDay = Math.floor(
+    (currentDay - firstDay.getDate() + firstDay.getDay() + 5) / 7
+  );
+  return Math.ceil(daysSinceFirstDay);
 }
 
 monthsOfYear.forEach((month) => {
@@ -41,42 +44,41 @@ monthsOfYear.forEach((month) => {
   calendarContainer.appendChild(displayMonth);
 
   // Create a new week container for each month
-  const monthContainer = document.createElement("div");
-  monthContainer.classList.add("week-list");
-  calendarContainer.appendChild(monthContainer);
-
-  // Declare weekContainer outside the loop
   let weekContainer;
 
-  // Create calendar for the month
   for (let day = 1; day <= numerOfDays; day++) {
     const currentDayDate = new Date(currentYear, monthIndex, day);
     const dayOfWeek = daysOfWeek[currentDayDate.getDay()];
     const week = calculateWeekNumber(firstDayOfMonth, day);
 
     // Check if a new week is starting
-    if (day === 1 || week !== calculateWeekNumber(firstDayOfMonth, day - 1)) {
+    if (
+      !weekContainer ||
+      week !== calculateWeekNumber(firstDayOfMonth, day - 1)
+    ) {
       // Create a new week container
       weekContainer = document.createElement("div");
-      monthContainer.appendChild(weekContainer);
+      weekContainer.classList.add("week-container");
+      calendarContainer.appendChild(weekContainer);
 
       // Display the week number
       const displayWeek = document.createElement("h4");
       displayWeek.classList.add("weeks");
-      displayWeek.innerHTML = `Week ${week}`;
+      displayWeek.innerHTML = `Week ${week}:`;
       weekContainer.appendChild(displayWeek);
     }
 
-    // Create a paragraph for each day and append it to the week container
-    const displayDay = document.createElement("p");
+    // Create a span for each day and append it to the current week container
+    const displayDay = document.createElement("span");
     displayDay.classList.add("days");
-    displayDay.innerHTML = `${dayOfWeek}`;
+    displayDay.innerHTML = `${dayOfWeek} `;
     weekContainer.appendChild(displayDay);
 
     const dayInput = document.createElement("input");
     dayInput.type = "checkbox";
     weekContainer.appendChild(dayInput);
   }
+
   // Add a newline for better readability
   const newline = document.createElement("br");
   calendarContainer.appendChild(newline);
