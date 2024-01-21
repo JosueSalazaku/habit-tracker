@@ -23,13 +23,6 @@ if (localStorage.getItem("darkMode") === "enabled") {
   checkBox.checked = true;
 }
 
-function calculateWeekNumber(firstDay, currentDay) {
-  const daysSinceFirstDay = Math.floor(
-    (currentDay - firstDay.getDate() + firstDay.getDay() + 5) / 7
-  );
-  return Math.ceil(daysSinceFirstDay);
-}
-
 monthsOfYear.forEach((month) => {
   const currentYear = new Date().getFullYear();
   const monthIndex = monthsOfYear.indexOf(month);
@@ -43,20 +36,14 @@ monthsOfYear.forEach((month) => {
   displayMonth.innerHTML = month;
   calendarContainer.appendChild(displayMonth);
 
-  // Create a new week container for each month
   let weekContainer;
 
   for (let day = 1; day <= numerOfDays; day++) {
     const currentDayDate = new Date(currentYear, monthIndex, day);
     const dayOfWeek = daysOfWeek[currentDayDate.getDay()];
-    const week = calculateWeekNumber(firstDayOfMonth, day);
 
-    // Check if a new week is starting
-    if (
-      !weekContainer ||
-      week !== calculateWeekNumber(firstDayOfMonth, day - 1)
-    ) {
-      // Create a new week container
+    // Create a new week container when starting a new week
+    if (day % 7 === 1 || day === 1) {
       weekContainer = document.createElement("div");
       weekContainer.classList.add("week-container");
       calendarContainer.appendChild(weekContainer);
@@ -64,7 +51,7 @@ monthsOfYear.forEach((month) => {
       // Display the week number
       const displayWeek = document.createElement("h4");
       displayWeek.classList.add("weeks");
-      displayWeek.innerHTML = `Week ${week}:`;
+      displayWeek.innerHTML = `Week ${Math.ceil(day / 7)}:`;
       weekContainer.appendChild(displayWeek);
     }
 
